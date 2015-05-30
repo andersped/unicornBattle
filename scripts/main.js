@@ -4,7 +4,7 @@
 Physics(function (world) {
 
 //creating the boundry of the world to the window size     
-    var viewportBounds = Physics.aabb(0, 0, window.innerWidth, window.innerHeight)
+        var viewportBounds = Physics.aabb(0, 0, window.innerWidth, window.innerHeight)
         ,edgeBounce
         ,renderer
         ;
@@ -41,24 +41,41 @@ Physics(function (world) {
         iterations: 3
     });
 
-   
+
 
     // first three boxes fall 
     var boxes = [];
+    var img = new Image();
+    img.src = "wall.jpg";
+         
+    // var img = document.getElementById("wall");
     for ( var i = 0, l = 3; i < l; ++i ){
 
-        boxes.push( Physics.body('rectangle', {
+        // boxes.push( Physics.body('rectangle', {
+
+        //     width: 75
+        //     ,height: 75
+        //     ,x: 60 * (i % 6) + renderer.width / 2 - (180)
+        //     ,y: 60 * (i / 6 | 0) + 50
+        //     ,restitution: 0.9
+        //     ,angle: Math.random()
+        //     ,styles: {
+        //         fillStyle: '#268bd2'
+        //         ,strokeStyle: '#155479'
+        //     }
+        // }));
+        var box = Physics.body('rectangle', {
             width: 75
             ,height: 75
             ,x: 60 * (i % 6) + renderer.width / 2 - (180)
             ,y: 60 * (i / 6 | 0) + 50
             ,restitution: 0.9
             ,angle: Math.random()
-            ,styles: {
-                fillStyle: '#268bd2'
-                ,strokeStyle: '#155479'
-            }
-        }));
+        });
+        box.view = new Image();
+        box.view.src = "wall.jpg";
+
+        boxes.push(box)
     }
 
     //adding boxes and constraint to world 
@@ -75,18 +92,22 @@ Physics(function (world) {
         'interact:poke': function(pos,e){
         
     var boxes = [];
-        boxes.push( Physics.body('rectangle', {
+        var box = Physics.body('rectangle', {
             width: 75   
             ,height: 75
             ,x: event.clientX //follows the x coordinate for the mouse
             ,y: event.clientY //follows the y coordinate for the mouse
             ,restitution: 1
             ,angle: Math.random() //random angle of each box
-            ,styles: {
-                fillStyle: '#268bd2' //background of the boxes, need to add an image
-                ,strokeStyle: '#155479'
-            }
-        }));
+            // ,styles: {
+            //     fillStyle: '#268bd2' //background of the boxes, need to add an image
+            //     ,strokeStyle: '#155479'
+            // }
+        });
+        box.view = new Image();
+        box.view.src = "wall.jpg";
+
+        boxes.push(box)
 
 
     world.add( boxes );
